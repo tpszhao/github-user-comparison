@@ -5,8 +5,9 @@ import './Card.css'
 
 
 export default function Card({winner,updateScoreList}) {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [status, setStatus] = useState("initial");
+    const [value, setValue] = useState("");
     const cancel = useRef(null);
 
     useEffect(() => {
@@ -18,22 +19,23 @@ export default function Card({winner,updateScoreList}) {
         }
     }, [user,status])
 
-    const enterKeyPressed = e => {
-        if (e.key === 'Enter') search(e);
-    }
-
     const search = e => {
         cancel.current && cancel.current();
-        let username = e.target.value;
+        e.preventDefault();
         setStatus("loading");
-        axios.get(`https://api.github.com/users/${username}`,{
+        axios.get(`https://api.github.com/users/${value}`,{
             cancelToken:new axios.CancelToken(c => cancel.current = c)
         }).then(res=>{
-            setStatus("success");
             setUser(res.data);
+            setStatus("success");
         }).catch(() =>{
             setStatus("error");
         })
+    }
+
+    const changeValue = e => {
+        const username = e.target.value;
+        setValue(username);
     }
 
     const displayinfo = ()=>{
@@ -43,7 +45,7 @@ export default function Card({winner,updateScoreList}) {
             case "loading":
                 return <span>Loading</span>
             case "success":
-                return <UserStat user = {user} winner={winner}/>
+                return user&&<UserStat user = {user} winner={winner}/>
             case "error":
                 return <span>User Does Not Exist</span>
             default:
@@ -53,7 +55,9 @@ export default function Card({winner,updateScoreList}) {
 
     return (
         <div className="card">
-            <input type="text" onKeyUp={enterKeyPressed}/>
+            <form onSubmit={search}>
+                <input type="text" value={value} onChange={changeValue}/>
+            </form>
             {displayinfo()}
         </div>
     )
