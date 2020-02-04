@@ -31,6 +31,10 @@ span{
     flex:0 1 100%;
 }
 
+.userStat>span{
+    font-size: 0.9em;
+}
+
 
 a.button{
     height: 40px;
@@ -45,5 +49,5 @@ a.button{
     background-color: white;
     border-radius: 20px;
     box-shadow: 0px 0px 15px rgba(254, 146, 100, 0.685);
-    margin: 5px;
+    margin: 15px;
 }

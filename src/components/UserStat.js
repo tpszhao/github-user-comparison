@@ -1,8 +1,7 @@
 import React from 'react'
 import './UserStat.css'
 
-export default function UserStat(props) {
-    const {user} = props;
+export default function UserStat({user,winner}) {
     return (
         <>
             <div className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></div>
@@ -13,6 +12,7 @@ export default function UserStat(props) {
                 <span>{`Score: ${user.public_repos + user.followers}`}</span>
             </div>
             <a className="button" href={user.html_url}>Profile</a>
+            {winner && <span style={{color:"black"}}>Winner</span>}
         </>
     )
 }

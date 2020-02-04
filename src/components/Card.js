@@ -1,47 +1,54 @@
-import React, {useState,useRef} from 'react'
+import React, {useState,useRef,useEffect} from 'react'
 import UserStat from './UserStat'
 import axios from 'axios'
 import './Card.css'
 
 
-export default function Card() {
-    const [user, setUser] = useState({});
-    const [status, setStatus] = useState("initial")
+export default function Card({winner,updateScoreList}) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [value, setValue] = useState("");
     const cancel = useRef(null);
+
+    useEffect(() => {
+        if(loading || error){
+            updateScoreList("empty");
+        }else if(user&&user.public_repos&&user.followers){
+            updateScoreList(user.public_repos + user.followers);
+        }
+    }, [user,loading,error])
 
     const search = e => {
         cancel.current && cancel.current();
-        let username = e.target.value;
-        setStatus("loading");
-        axios.get(`https://api.github.com/users/${username}`,{
+        e.preventDefault();
+        setLoading(true);
+        setError(false);
+        setUser(null);
+        axios.get(`https://api.github.com/users/${value}`,{
             cancelToken:new axios.CancelToken(c => cancel.current = c)
         }).then(res=>{
-            setStatus("success");
-            setUser(res.data)
-        }).catch(error=>{
-            setStatus("error");
+            setLoading(false);
+            setUser(res.data);
+        }).catch(() =>{
+            setError(true);
+            setLoading(false);
         })
     }
 
-    const displayinfo = ()=>{
-        switch(status){
-            case "initial":
-                return <span>Waiting For Input</span>
-            case "loading":
-                return <span>Loading</span>
-            case "success":
-                return <UserStat user = {user}/>
-            case "error":
-                return <span>User Does Not Exist</span>
-            default:
-                return;
-        }
+    const changeValue = e => {
+        const username = e.target.value;
+        setValue(username);
     }
 
     return (
         <div className="card">
-            <input type="text" onKeyUp={search}/>
-            {displayinfo()}
+            <form onSubmit={search}>
+                <input type="text" value={value} onChange={changeValue}/>
+            </form>
+            {loading&&<span>Loading</span>}
+            {!loading&&error&&<span>Error</span>}
+            {!loading&&user&&<UserStat user = {user} winner={winner}/>}
         </div>
     )
 }
