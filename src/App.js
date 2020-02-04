@@ -5,7 +5,6 @@ import './App.css';
 
 function App() {
   const [scoreList, setScoreList] = useState(["empty","empty"]);
-  const [count, setCount] = useState(0);
 
   const updateScoreList = (idx,score) => {
     let newList = scoreList.slice();
