@@ -5,6 +5,7 @@ import './App.css';
 
 function App() {
   const [scoreList, setScoreList] = useState(["empty","empty"]);
+  const [count, setCount] = useState(0);
 
   const updateScoreList = (idx,score) => {
     let newList = scoreList.slice();
@@ -31,7 +32,7 @@ function App() {
         updateScoreList={score=>updateScoreList(0,score)}/>
       <Card 
         winner={ismax(1)} 
-        updateScoreList={score=>updateScoreList(1,score)}/>      
+        updateScoreList={score=>updateScoreList(1,score)}/>  
     </div>
   );
 }
