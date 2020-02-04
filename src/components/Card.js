@@ -9,6 +9,10 @@ export default function Card() {
     const [status, setStatus] = useState("initial")
     const cancel = useRef(null);
 
+    const enterKeyPressed = e => {
+        if (e.key === 'Enter') search(e);
+    }
+
     const search = e => {
         cancel.current && cancel.current();
         let username = e.target.value;
@@ -40,7 +44,7 @@ export default function Card() {
 
     return (
         <div className="card">
-            <input type="text" onKeyUp={search}/>
+            <input type="text" onKeyUp={enterKeyPressed}/>
             {displayinfo()}
         </div>
     )
