@@ -4,33 +4,33 @@ import axios from 'axios'
 import './Card.css'
 
 
-export default function Card({winner,updateScoreList}) {
+export default function Card({winner = false,swapuser}) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
     const cancel = useRef(null);
 
+    const prevUser = useRef(null);
+
     useEffect(() => {
-        if(loading || error){
-            updateScoreList("empty");
-        }else if(user&&user.public_repos&&user.followers){
-            updateScoreList(user.public_repos + user.followers);
-        }
-    }, [user,loading,error])
+        swapuser(prevUser.current,user);
+    }, [user])
 
     const search = e => {
         cancel.current && cancel.current();
         e.preventDefault();
         setLoading(true);
         setError(false);
-        setUser(null);
         axios.get(`https://api.github.com/users/${value}`,{
             cancelToken:new axios.CancelToken(c => cancel.current = c)
         }).then(res=>{
+            prevUser.current = user;
             setLoading(false);
             setUser(res.data);
         }).catch(() =>{
+            prevUser.current = null;
+            setUser(null);
             setError(true);
             setLoading(false);
         })
