@@ -47,7 +47,6 @@ function App() {
     <div className="container">
       <Card winner={determineWinner()} swapuser={swapUser}/>
       <Card winner={determineWinner()} swapuser={swapUser}/>
-      <button onClick={()=>console.log(userList)}>SHOW LIST</button>
     </div>
   );
 }
