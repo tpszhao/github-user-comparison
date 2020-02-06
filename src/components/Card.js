@@ -17,7 +17,7 @@ export default function Card({winner = false,swapuser}) {
         swapuser(prevUser.current,user);
     }, [user])
 
-    const search = e => {
+    const search = async e => {
         cancel.current && cancel.current();
         e.preventDefault();
         setLoading(true);
@@ -26,14 +26,14 @@ export default function Card({winner = false,swapuser}) {
             cancelToken:new axios.CancelToken(c => cancel.current = c)
         }).then(res=>{
             prevUser.current = user;
-            setLoading(false);
+            // setLoading(false);
             setUser(res.data);
         }).catch(() =>{
             prevUser.current = null;
             setUser(null);
             setError(true);
-            setLoading(false);
         })
+        setLoading(false);
     }
 
     const changeValue = e => {
@@ -46,9 +46,11 @@ export default function Card({winner = false,swapuser}) {
             <form onSubmit={search}>
                 <input type="text" value={value} onChange={changeValue}/>
             </form>
-            {loading&&<span>Loading</span>}
-            {!loading&&error&&<span>Error</span>}
-            {!loading&&user&&<UserStat user = {user} winner={winner}/>}
+            {
+                loading?<span>Loading</span>:
+                error?<span>Error</span>:
+                user&&<UserStat user = {user} winner={winner}/>
+            }
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useMemo} from 'react';
 import Card from './components/Card'
 import './App.css';
 
@@ -43,10 +43,13 @@ function App() {
     if(newlist[0].score === newlist[1].score) return null;
     return newlist[0].name;
   }
+
+  const winner = useMemo(() => determineWinner(), [userList])
+
   return (
     <div className="container">
-      <Card winner={determineWinner()} swapuser={swapUser}/>
-      <Card winner={determineWinner()} swapuser={swapUser}/>
+      <Card winner={winner} swapuser={swapUser}/>
+      <Card winner={winner} swapuser={swapUser}/>
     </div>
   );
 }
