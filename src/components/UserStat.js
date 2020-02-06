@@ -12,7 +12,7 @@ export default function UserStat({user,winner}) {
                 <span>{`Score: ${user.public_repos + user.followers}`}</span>
             </div>
             <a className="button" href={user.html_url}>Profile</a>
-            {winner && <span style={{color:"black"}}>Winner</span>}
+            {winner&&(winner === user.login)&&<span style={{color:"black"}}>Winner</span>}
         </>
     )
 }

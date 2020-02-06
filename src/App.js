@@ -1,37 +1,49 @@
-import React, {useState} from 'react';
+import React, {useState,useMemo} from 'react';
 import Card from './components/Card'
 import './App.css';
 
 
 function App() {
-  const [scoreList, setScoreList] = useState(["empty","empty"]);
+  const [userList, setUserList] = useState([null,null]);
 
-  const updateScoreList = (idx,score) => {
-    let newList = scoreList.slice();
-    newList[idx] = score;
-    setScoreList(newList);
-    console.log(newList);
+  const updateUser = (idx,user)=>{
+    console.log(`replace index ${idx}`)
+    let newlist = userList.slice();
+    newlist.splice(idx,1,user);
+    setUserList(newlist);
   }
 
-  const ismax = idx =>{
-    const compare_value = scoreList[idx];
-    let result = true;
-    for(let i = 0;i<scoreList.length;i++){
-      if(i === idx){continue;}
-      result = result && compare_value > scoreList[i];
-      if(!result) return result;
-    }
-    return result;
+  const userScore = user=>{
+    let score = user ? user.public_repos + user.followers : 0;
+    return score;
   }
+
+  const determineWinner = ()=>{
+    if (userList.length < 2) return null;
+    let newlist = userList.slice();
+    newlist.sort((a,b)=>userScore(b) - userScore(a));
+    let firstUser = newlist[0];
+    let secondUser = newlist[1];
+    if(!firstUser || !secondUser) return null;
+    if(userScore(firstUser) === userScore(secondUser)) return null;
+    if(firstUser.login === secondUser.login) return null;
+    return firstUser.login;
+  }
+
+  const winner = useMemo(() => determineWinner(), [userList])
 
   return (
     <div className="container">
-      <Card 
-        winner={ismax(0)} 
-        updateScoreList={score=>updateScoreList(0,score)}/>
-      <Card 
-        winner={ismax(1)} 
-        updateScoreList={score=>updateScoreList(1,score)}/>  
+      {
+        userList.map((user,i)=>{
+          return <Card 
+                    winner={winner} 
+                    user={user} 
+                    key={i} 
+                    idx={i}
+                    updateUser={updateUser}/>
+        })
+      }
     </div>
   );
 }
