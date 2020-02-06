@@ -4,52 +4,46 @@ import './App.css';
 
 
 function App() {
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState([null,null]);
 
-  const swapUser = (prevUser= null,newUser = null) => {
+  const updateUser = (idx,user)=>{
+    console.log(`replace index ${idx}`)
     let newlist = userList.slice();
-    newlist = prevUser? removeUser(prevUser,newlist):newlist;
-    newlist = newUser? addUser(newUser,newlist):newlist;
-    console.log(newlist)
+    newlist.splice(idx,1,user);
     setUserList(newlist);
   }
 
-  const removeUser = (user,list) => {
-    let newlist = list.slice();
-    let name = user.login;
-      let name_found = false;
-      let i;
-      for (i = 0;i<list.length;i++){
-        if(userList[i].name === name){
-          name_found = true;
-          break;
-        }
-      }
-      name_found && newlist.splice(i,1);
-    return newlist
-  }
-
-  const addUser = (user,list) => {
-    let newlist = list.slice();
-    let {login,public_repos,followers} = user;
-    newlist.push({name:login,score:public_repos+followers});
-    return newlist;
+  const userScore = user=>{
+    let score = user ? user.public_repos + user.followers : 0;
+    return score;
   }
 
   const determineWinner = ()=>{
     if (userList.length < 2) return null;
     let newlist = userList.slice();
-    newlist.sort((a,b)=>b.score - a.score);
-    if(newlist[0].score === newlist[1].score) return null;
-    return newlist[0].name;
+    newlist.sort((a,b)=>userScore(b) - userScore(a));
+    let firstUser = newlist[0];
+    let secondUser = newlist[1];
+    if(!firstUser || !secondUser) return null;
+    if(userScore(firstUser) === userScore(secondUser)) return null;
+    if(firstUser.login === secondUser.login) return null;
+    return firstUser.login;
   }
 
   const winner = useMemo(() => determineWinner(), [userList])
 
   return (
     <div className="container">
-      <Card winner={winner} swapuser={swapUser}/>
-      <Card winner={winner} swapuser={swapUser}/>
+      {
+        userList.map((user,i)=>{
+          return <Card 
+                    winner={winner} 
+                    user={user} 
+                    key={i} 
+                    idx={i}
+                    updateUser={updateUser}/>
+        })
+      }
     </div>
   );
 }

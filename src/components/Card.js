@@ -1,38 +1,32 @@
-import React, {useState,useRef,useEffect} from 'react'
+import React, {useState,useRef} from 'react'
 import UserStat from './UserStat'
 import axios from 'axios'
 import './Card.css'
 
 
-export default function Card({winner = false,swapuser}) {
-    const [user, setUser] = useState(null);
+export default function Card({winner = false,user=null,idx,updateUser}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
     const cancel = useRef(null);
-
-    const prevUser = useRef(null);
-
-    useEffect(() => {
-        swapuser(prevUser.current,user);
-    }, [user])
 
     const search = async e => {
         cancel.current && cancel.current();
         e.preventDefault();
         setLoading(true);
         setError(false);
-        axios.get(`https://api.github.com/users/${value}`,{
-            cancelToken:new axios.CancelToken(c => cancel.current = c)
-        }).then(res=>{
-            prevUser.current = user;
-            setUser(res.data);
-        }).catch(() =>{
-            prevUser.current = null;
-            setUser(null);
+        let user = null;
+        try{
+            const response = await axios.get(`https://api.github.com/users/${value}`,{
+                cancelToken:new axios.CancelToken(c => cancel.current = c)
+            })
+            user = response.data
+        }catch{
             setError(true);
-        })
-        setLoading(false);
+        }finally{
+            updateUser(idx,user);
+            setLoading(false);
+        }
     }
 
     const changeValue = e => {
