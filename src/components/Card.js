@@ -1,15 +1,22 @@
-import React, {useState,useRef} from 'react'
+import React, {useState,useRef,useEffect} from 'react'
 import UserStat from './UserStat'
 import axios from 'axios'
 import './Card.css'
 
 
-export default function Card({winner = false,user=null,idx,updateUser}) {
+export default function Card(props) {
+    const {winner = false,user=null,idx,updateUser, removeCard} = props
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
     const prevSearch = useRef("");
     const cancel = useRef(null);
+
+    useEffect(() => {
+        let newValue = user? user.login:"";
+        prevSearch.current = newValue;
+        setValue(newValue)
+    }, [user])
 
     const search = async e => {
         e.preventDefault();
@@ -49,6 +56,7 @@ export default function Card({winner = false,user=null,idx,updateUser}) {
                 error?<span>Error</span>:
                 user&&<UserStat user = {user} winner={winner}/>
             }
+            <button onClick={() => removeCard(idx)}>Remove Card</button>
         </div>
     )
 }

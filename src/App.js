@@ -30,7 +30,19 @@ function App() {
     return firstUser.login;
   }
 
-  const winner = useMemo(() => determineWinner(), [userList])
+  const winner = useMemo(() => determineWinner(), [userList]);
+
+  const addCard = ()=>{
+    let newlist = userList.slice();
+    newlist.push(null);
+    setUserList(newlist);
+  }
+
+  const removeCard = idx =>{
+    let newlist = userList.slice();
+    newlist.splice(idx,1);
+    setUserList(newlist);
+  }
 
   return (
     <div className="container">
@@ -41,9 +53,11 @@ function App() {
                     user={user} 
                     key={i} 
                     idx={i}
+                    removeCard={removeCard}
                     updateUser={updateUser}/>
         })
       }
+      <button onClick={addCard}>Add Card</button>
     </div>
   );
 }
