@@ -8,24 +8,29 @@ export default function Card({winner = false,user=null,idx,updateUser}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
+    const prevSearch = useRef("");
     const cancel = useRef(null);
 
     const search = async e => {
-        cancel.current && cancel.current();
         e.preventDefault();
-        setLoading(true);
-        setError(false);
-        let user = null;
-        try{
-            const response = await axios.get(`https://api.github.com/users/${value}`,{
-                cancelToken:new axios.CancelToken(c => cancel.current = c)
-            })
-            user = response.data
-        }catch{
-            setError(true);
-        }finally{
-            updateUser(idx,user);
-            setLoading(false);
+        if(prevSearch.current !== value){
+            prevSearch.current = value;
+            console.log("search")
+            cancel.current && cancel.current();
+            setLoading(true);
+            setError(false);
+            let user = null;
+            try{
+                const response = await axios.get(`https://api.github.com/users/${value}`,{
+                    cancelToken:new axios.CancelToken(c => cancel.current = c)
+                })
+                user = response.data
+            }catch{
+                setError(true);
+            }finally{
+                updateUser(idx,user);
+                setLoading(false);
+            }
         }
     }
 
