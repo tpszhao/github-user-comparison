@@ -2,7 +2,7 @@ import React from 'react'
 import './UserStat.css'
 
 export default function UserStat({user,winner}) {
-    if (user == null) return;
+    if (!user) return;
     return (
         <>
             <div className="avatar" style={{backgroundImage: `url(${user.avatar_url})`}}></div>

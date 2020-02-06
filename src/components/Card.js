@@ -5,7 +5,7 @@ import './Card.css'
 
 
 export default function Card(props) {
-    const {winner=false,user=null,idx,updateUser, removeCard} = props
+    const {winner=false,user=null,idx,updateUser, removeCard} = props;
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
