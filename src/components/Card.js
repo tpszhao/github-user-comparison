@@ -26,7 +26,6 @@ export default function Card({winner = false,swapuser}) {
             cancelToken:new axios.CancelToken(c => cancel.current = c)
         }).then(res=>{
             prevUser.current = user;
-            // setLoading(false);
             setUser(res.data);
         }).catch(() =>{
             prevUser.current = null;
