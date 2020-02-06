@@ -7,14 +7,13 @@ function App() {
   const [userList, setUserList] = useState([null,null]);
 
   const updateUser = (idx,user)=>{
-    console.log(`replace index ${idx}`)
     let newlist = userList.slice();
     newlist.splice(idx,1,user);
     setUserList(newlist);
   }
 
   const userScore = user=>{
-    let score = user ? user.public_repos + user.followers : 0;
+    let score = user ? user.public_repos + user.followers : -1;
     return score;
   }
 
@@ -24,7 +23,7 @@ function App() {
     newlist.sort((a,b)=>userScore(b) - userScore(a));
     let firstUser = newlist[0];
     let secondUser = newlist[1];
-    if(!firstUser || !secondUser) return null;
+    if(!secondUser) return null;
     if(userScore(firstUser) === userScore(secondUser)) return null;
     if(firstUser.login === secondUser.login) return null;
     return firstUser.login;

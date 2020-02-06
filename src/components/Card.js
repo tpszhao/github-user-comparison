@@ -20,24 +20,21 @@ export default function Card(props) {
 
     const search = async e => {
         e.preventDefault();
-        if(prevSearch.current !== value){
-            prevSearch.current = value;
-            console.log("search")
-            cancel.current && cancel.current();
-            setLoading(true);
-            setError(false);
-            let user = null;
-            try{
-                const response = await axios.get(`https://api.github.com/users/${value}`,{
-                    cancelToken:new axios.CancelToken(c => cancel.current = c)
-                })
-                user = response.data
-            }catch{
-                setError(true);
-            }finally{
-                updateUser(idx,user);
-                setLoading(false);
-            }
+        console.log("search")
+        cancel.current && cancel.current();
+        setLoading(true);
+        setError(false);
+        let user = null;
+        try{
+            const response = await axios.get(`https://api.github.com/users/${value}`,{
+                cancelToken:new axios.CancelToken(c => cancel.current = c)
+            })
+            user = response.data
+        }catch{
+            setError(true);
+        }finally{
+            updateUser(idx,user);
+            setLoading(false);
         }
     }
 
