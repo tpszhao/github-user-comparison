@@ -3,6 +3,8 @@
     width: 24px;
     height: 24px;
     position:absolute;
+    border-radius: 50%;
+    border: 1px solid green;
     --color: transparent;
 }
 
