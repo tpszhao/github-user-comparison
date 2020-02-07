@@ -20,7 +20,6 @@ export default function Card(props) {
 
     const search = async e => {
         e.preventDefault();
-        console.log("search")
         cancel.current && cancel.current();
         setLoading(true);
         setError(false);
@@ -54,14 +53,9 @@ export default function Card(props) {
                     value={value} 
                     onChange={changeValue} />
             </form>
-            {/* {
-                loading?<span>Loading</span>:
-                error?<span>Error</span>:
-                user&&<UserStat user = {user} winner={winner}/>
-            } */}
-                {loading&&<span className={span}>Loading</span>}
-                {!loading&&error&&<span className={span}>Error</span>}
-                {!loading&&!error&&user&&<UserStat user = {user} winner={winner}/>}
+            {loading&&<span className={span}>Loading</span>}
+            {!loading&&error&&<span className={span}>Error</span>}
+            {!loading&&!error&&user&&<UserStat user = {user} winner={winner}/>}
         </div>
     )
 }
