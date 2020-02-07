@@ -1,12 +1,13 @@
 import React, {useState,useRef,useEffect} from 'react'
 import UserStat from './UserStat'
+import CloseButton from './CloseButton'
 import axios from 'axios'
 import styles from './Card.module.css'
 import {span} from './UserStat.module.css'
 
 
 export default function Card(props) {
-    const {winner=false,user=null,idx,updateUser} = props;
+    const {winner=false,user=null,idx,updateUser,removeCard} = props;
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
@@ -45,6 +46,7 @@ export default function Card(props) {
 
     return (
         <div className={styles.card}>
+            <CloseButton style={{right:'20px'}} onClick={()=>{removeCard(idx)}}/>
             <form onSubmit={search} className={styles.form}>
                 <input 
                     type="text" 
