@@ -55,7 +55,7 @@ export default function Card(props) {
             </form>
             {loading&&<span className={span}>Loading</span>}
             {!loading&&error&&<span className={span}>Error</span>}
-            {!loading&&!error&&user&&<UserStat user = {user} winner={winner}/>}
+            {!loading&&user&&<UserStat user = {user} winner={winner}/>}
         </div>
     )
 }
