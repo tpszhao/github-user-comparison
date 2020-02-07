@@ -13,30 +13,19 @@
     justify-content: space-around;
     flex-wrap: wrap;
     margin:10px auto;
+    font-family: FreeMono,monospace;
+    color: white;
+    text-align: center;
 }
 
-span{
-    font-family: FreeMono,monospace;
-    text-align: center;
-    color: white;
+.span{
     margin: 5px;
     box-sizing: border-box;
-}
-
-.userStat>span:first-child{
-    font-size: 1.2em;
-    flex:0 1 100%;
-}
-.userStat>span:last-child{
-    flex:0 1 100%;
-}
-
-.userStat>span{
-    font-size: 0.9em;
+    font-size:0.9em;
 }
 
 
-a.button{
+.button{
     height: 40px;
     width:156px;
 

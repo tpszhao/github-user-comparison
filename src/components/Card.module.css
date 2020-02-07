@@ -15,11 +15,11 @@
 
 }
 
-form {
+.form {
     width: 100%;
 }
 
-input {
+.input {
     border: none;
     border-radius: 10px;
     font-family: FreeMono,monospace;

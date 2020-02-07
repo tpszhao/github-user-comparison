@@ -1,7 +1,7 @@
 import React, {useState,useRef,useEffect} from 'react'
 import UserStat from './UserStat'
 import axios from 'axios'
-import './Card.css'
+import styles from './Card.module.css'
 
 
 export default function Card(props) {
@@ -43,9 +43,13 @@ export default function Card(props) {
 
 
     return (
-        <div className="card">
-            <form onSubmit={search}>
-                <input type="text" value={value} onChange={changeValue}/>
+        <div className={styles.card}>
+            <form onSubmit={search} className={styles.form}>
+                <input 
+                    type="text" 
+                    className={styles.input}
+                    value={value} 
+                    onChange={changeValue} />
             </form>
             {/* {
                 loading?<span>Loading</span>:
