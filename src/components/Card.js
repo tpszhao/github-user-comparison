@@ -2,6 +2,7 @@ import React, {useState,useRef,useEffect} from 'react'
 import UserStat from './UserStat'
 import axios from 'axios'
 import styles from './Card.module.css'
+import {span} from './UserStat.module.css'
 
 
 export default function Card(props) {
@@ -56,8 +57,8 @@ export default function Card(props) {
                 error?<span>Error</span>:
                 user&&<UserStat user = {user} winner={winner}/>
             } */}
-                {loading&&<span>Loading</span>}
-                {!loading&&error&&<span>Error</span>}
+                {loading&&<span className={span}>Loading</span>}
+                {!loading&&error&&<span className={span}>Error</span>}
                 {!loading&&!error&&user&&<UserStat user = {user} winner={winner}/>}
         </div>
     )

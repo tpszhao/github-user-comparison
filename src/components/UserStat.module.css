@@ -13,15 +13,26 @@
     justify-content: space-around;
     flex-wrap: wrap;
     margin:10px auto;
-    font-family: FreeMono,monospace;
-    color: white;
-    text-align: center;
 }
 
 .span{
+    font-family: FreeMono,monospace;
+    color: white;
+    text-align: center;
     margin: 5px;
     box-sizing: border-box;
     font-size:0.9em;
+}
+
+.score{
+    composes:span;
+    flex: 0 1 100%;
+    font-size:1.0em;
+}
+
+.login{
+    composes:score;
+    font-size: 1.2em;;
 }
 
 
