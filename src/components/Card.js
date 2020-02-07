@@ -9,12 +9,10 @@ export default function Card(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
-    const prevSearch = useRef("");
     const cancel = useRef(null);
 
     useEffect(() => {
         let newValue = user? user.login:"";
-        prevSearch.current = newValue;
         setValue(newValue);
     }, [user])
 
@@ -43,16 +41,20 @@ export default function Card(props) {
         setValue(username);
     }
 
+
     return (
         <div className="card">
             <form onSubmit={search}>
                 <input type="text" value={value} onChange={changeValue}/>
             </form>
-            {
+            {/* {
                 loading?<span>Loading</span>:
                 error?<span>Error</span>:
                 user&&<UserStat user = {user} winner={winner}/>
-            }
+            } */}
+                {loading&&<span>Loading</span>}
+                {!loading&&error&&<span>Error</span>}
+                {!loading&&!error&&user&&<UserStat user = {user} winner={winner}/>}
             <button onClick={() => removeCard(idx)}>Remove Card</button>
         </div>
     )

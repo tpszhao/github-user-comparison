@@ -23,10 +23,21 @@ function App() {
     newlist.sort((a,b)=>userScore(b) - userScore(a));
     let firstUser = newlist[0];
     let secondUser = newlist[1];
-    if(!secondUser) return null;
-    if(userScore(firstUser) === userScore(secondUser)) return null;
-    if(firstUser.login === secondUser.login) return null;
-    return firstUser.login;
+    let winner = null;
+
+    switch(userScore(secondUser)){
+      case -1:
+      case userScore(firstUser):
+        break;
+      default:
+        winner = firstUser&&firstUser.login;
+    }
+
+    return winner
+    // if(userScore(secondUser) < 0) return null;
+    // if(userScore(firstUser) === userScore(secondUser)) return null;
+
+    // return firstUser.login;
   }
 
   const winner = useMemo(() => determineWinner(), [userList]);
@@ -37,7 +48,7 @@ function App() {
     setUserList(newlist);
   }
 
-  const removeCard = idx =>{
+  const removeCard = idx =>{ 
     let newlist = userList.slice();
     newlist.splice(idx,1);
     setUserList(newlist);
