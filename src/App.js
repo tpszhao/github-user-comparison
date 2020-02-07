@@ -32,12 +32,7 @@ function App() {
       default:
         winner = firstUser&&firstUser.login;
     }
-
     return winner
-    // if(userScore(secondUser) < 0) return null;
-    // if(userScore(firstUser) === userScore(secondUser)) return null;
-
-    // return firstUser.login;
   }
 
   const winner = useMemo(() => determineWinner(), [userList]);

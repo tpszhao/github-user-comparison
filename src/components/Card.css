@@ -11,6 +11,7 @@
     margin:15px;
 
     text-align:center;
+    position:relative;
 
 }
 
@@ -23,11 +24,8 @@ input {
     border-radius: 10px;
     font-family: FreeMono,monospace;
     height: 20px;
-    width: 70%;
+    width: 60%;
     padding:0px 20px;
     box-sizing: border-box;
-}
-
-input[type=text]:focus{
-    outline: none;
+    outline:none;
 }
