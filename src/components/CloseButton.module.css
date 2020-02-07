@@ -1,0 +1,68 @@
+
+.background {
+    width: 24px;
+    height: 24px;
+    position:absolute;
+    --color: transparent;
+}
+
+.background:hover{
+    --color: white;
+}
+
+.transform{
+    position: absolute;
+    left:18px;
+    top:2px;
+    transform: rotate(45deg);
+}
+
+.inner{
+    background-color: var(--color);
+    box-sizing: border-box;
+    position:absolute;
+    border: 1px solid white;
+}
+
+.top{
+    composes:inner;
+    width:6px;
+    height:9px;
+    border-bottom: none;
+}
+
+.bottom{
+    composes:inner;
+    width:6px;
+    height:9px;
+    top:15px;
+    border-top: none;
+}
+
+.left{
+    composes:inner;
+    top:9px;
+    left:-9px;
+    width:10px;
+    height:6px;
+    border-right: none;
+}
+
+.right{
+    composes:inner;
+    top:9px;
+    left:5px;
+    width:10px;
+    height:6px;
+    border-left: none;
+}
+
+.center{
+    composes:inner;
+    top: 9px;
+    width: 6px;
+    height:6px;
+    border: 1px solid var(--color);
+}
+
+

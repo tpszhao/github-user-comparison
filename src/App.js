@@ -7,14 +7,13 @@ function App() {
   const [userList, setUserList] = useState([null,null]);
 
   const updateUser = (idx,user)=>{
-    console.log(`replace index ${idx}`)
     let newlist = userList.slice();
     newlist.splice(idx,1,user);
     setUserList(newlist);
   }
 
   const userScore = user=>{
-    let score = user ? user.public_repos + user.followers : 0;
+    let score = user ? user.public_repos + user.followers : -1;
     return score;
   }
 
@@ -24,13 +23,31 @@ function App() {
     newlist.sort((a,b)=>userScore(b) - userScore(a));
     let firstUser = newlist[0];
     let secondUser = newlist[1];
-    if(!firstUser || !secondUser) return null;
-    if(userScore(firstUser) === userScore(secondUser)) return null;
-    if(firstUser.login === secondUser.login) return null;
-    return firstUser.login;
+    let winner = null;
+
+    switch(userScore(secondUser)){
+      case -1:
+      case userScore(firstUser):
+        break;
+      default:
+        winner = firstUser&&firstUser.login;
+    }
+    return winner
   }
 
-  const winner = useMemo(() => determineWinner(), [userList])
+  const winner = useMemo(() => determineWinner(), [userList]);
+
+  const addCard = ()=>{
+    let newlist = userList.slice();
+    newlist.push(null);
+    setUserList(newlist);
+  }
+
+  const removeCard = idx =>{ 
+    let newlist = userList.slice();
+    newlist.splice(idx,1);
+    setUserList(newlist);
+  }
 
   return (
     <div className="container">
@@ -41,9 +58,11 @@ function App() {
                     user={user} 
                     key={i} 
                     idx={i}
+                    removeCard={removeCard}
                     updateUser={updateUser}/>
         })
       }
+      <button onClick={addCard}>Add Card</button>
     </div>
   );
 }

@@ -15,28 +15,28 @@
     margin:10px auto;
 }
 
-span{
+.span{
     font-family: FreeMono,monospace;
-    text-align: center;
     color: white;
+    text-align: center;
     margin: 5px;
     box-sizing: border-box;
+    font-size:0.9em;
 }
 
-.userStat>span:first-child{
-    font-size: 1.2em;
-    flex:0 1 100%;
-}
-.userStat>span:last-child{
-    flex:0 1 100%;
+.score{
+    composes:span;
+    flex: 0 1 100%;
+    font-size:1.0em;
 }
 
-.userStat>span{
-    font-size: 0.9em;
+.login{
+    composes:score;
+    font-size: 1.1em;;
 }
 
 
-a.button{
+.button{
     height: 40px;
     width:156px;
 
@@ -50,4 +50,10 @@ a.button{
     border-radius: 20px;
     box-shadow: 0px 0px 15px rgba(254, 146, 100, 0.685);
     margin: 15px;
+}
+
+.button:hover{
+    background-color:#FE9164;
+    box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.685);
+    color: white;
 }
