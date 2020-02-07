@@ -45,7 +45,7 @@ export default function Card(props) {
 
     return (
         <div className={styles.card}>
-            <CloseButton style={{right:'20px'}} onClick={()=>{removeCard(idx)}}/>
+            <CloseButton style={{right:'20px'}} onClick={()=>{removeCard(user)}}/>
             <form onSubmit={search} className={styles.form}>
                 <input 
                     type="text" 

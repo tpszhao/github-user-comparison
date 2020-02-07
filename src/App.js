@@ -43,9 +43,8 @@ function App() {
     setUserList(newlist);
   }
 
-  const removeCard = idx =>{ 
-    let newlist = userList.slice();
-    newlist.splice(idx,1);
+  const removeCard = user =>{ 
+    let newlist = userList.filter(item => item!==user);
     setUserList(newlist);
   }
 
