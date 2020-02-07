@@ -1,0 +1,31 @@
+.blank_card{
+    composes: card from './Card.module.css';
+    background-image:   linear-gradient(150deg, #FF92A0,#FE9164 50%);
+    cursor:pointer;
+    justify-content: center;
+    --opacity:0.8;
+}
+
+.blank_card:hover{
+    --opacity:1.0;
+}
+
+
+.vertical{
+    border-radius: 5px;
+    width: 10px;
+    height: 300px;
+    background-color: white;
+    position: absolute;
+    opacity: var(--opacity);
+}
+
+.horizontal{
+    border-radius: 5px;
+    position: absolute;
+    height: 10px;
+    width:200px;
+    left: -95px;
+    top:145px;
+    background-color: white;
+}
