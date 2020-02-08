@@ -1,18 +1,25 @@
 import React, {useState,useRef,useEffect} from 'react'
-import {UserStat,CloseButton,LoadingScreen,ErrorScreen} from './Card/'
+import UserStat from './UserStat'
+import CloseButton from './CloseButton'
+import LoadingScreen from './LoadingScreen'
+import ErrorScreen from './ErrorScreen'
 import axios from 'axios'
 import styles from './Card.module.css'
 
 
 export default function Card(props) {
+<<<<<<< HEAD:src/components/Card/Card.js
+    const {winner=false,user,updateUser,removeCard} = props;
+=======
     const {winner=false,user=null,idx,updateUser,removeCard} = props;
+>>>>>>> master:src/components/Card.js
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
     const cancel = useRef(null);
 
     useEffect(() => {
-        let newValue = user? user.login:"";
+        let newValue = typeof user == "symbol" ? "": user.login;
         setValue(newValue);
     }, [user])
 
@@ -30,7 +37,7 @@ export default function Card(props) {
         }catch{
             setError(true);
         }finally{
-            updateUser(idx,user);
+            updateUser(user);
             setLoading(false);
         }
     }
@@ -43,7 +50,7 @@ export default function Card(props) {
 
     return (
         <div className={styles.card}>
-            <CloseButton style={{top:'12px',right:'24px'}} onClick={()=>removeCard(idx)}/>
+            <CloseButton style={{top:'12px',right:'24px'}} onClick={()=>removeCard(user)}/>
             <form onSubmit={search} className={styles.form}>
                 <input 
                     type="text" 
@@ -53,7 +60,7 @@ export default function Card(props) {
             </form>
             {loading&&<LoadingScreen/>}
             {!loading&&error&&<ErrorScreen/>}
-            {!loading&&user&&<UserStat user = {user} winner={winner}/>}
+            {!loading&&(typeof user !== "symbol")&&<UserStat user = {user} winner={winner}/>}
         </div>
     )
 }

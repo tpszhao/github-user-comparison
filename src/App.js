@@ -1,11 +1,10 @@
 import React, {useState,useMemo} from 'react';
-import Card from './components/Card'
-import BlankCard from './components/BlankCard'
+import {Card,BlankCard} from './components'
 import './App.css';
 
 
 function App() {
-  const [userList, setUserList] = useState([null,null]);
+  const [userList, setUserList] = useState([Symbol(),Symbol()]);
 
   const updateUser = (idx,user)=>{
     let newlist = userList.slice();
@@ -14,8 +13,15 @@ function App() {
   }
 
   const userScore = user=>{
-    let score = user ? user.public_repos + user.followers : -1;
-    return score;
+    let score;
+    switch(typeof user){
+      case "symbol":
+        score = -1;
+        break;
+      default:
+        score = user.public_repos + user.followers
+    }
+    return score
   }
 
   const determineWinner = ()=>{
@@ -40,13 +46,12 @@ function App() {
 
   const addCard = ()=>{
     let newlist = userList.slice();
-    newlist.push(null);
+    newlist.push(Symbol());
     setUserList(newlist);
   }
 
-  const removeCard = idx =>{ 
-    let newlist = userList.slice();
-    newlist.splice(idx,1);
+  const removeCard = user =>{ 
+    let newlist = userList.filter(item=>item!==user);
     setUserList(newlist);
   }
 
@@ -58,9 +63,8 @@ function App() {
                     winner={winner} 
                     user={user} 
                     key={i} 
-                    idx={i}
                     removeCard={removeCard}
-                    updateUser={updateUser}/>
+                    updateUser={user=>updateUser(i,user)}/>
         })
       }
       <BlankCard onClick={addCard}/>
