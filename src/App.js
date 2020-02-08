@@ -1,6 +1,5 @@
 import React, {useState,useMemo} from 'react';
-import Card from './components/Card'
-import BlankCard from './components/BlankCard'
+import {Card,BlankCard} from './components/Card'
 import './App.css';
 
 

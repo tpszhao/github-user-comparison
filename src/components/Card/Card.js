@@ -1,5 +1,8 @@
 import React, {useState,useRef,useEffect} from 'react'
-import {UserStat,CloseButton,LoadingScreen,ErrorScreen} from './Card/'
+import UserStat from './UserStat'
+import CloseButton from './CloseButton'
+import LoadingScreen from './LoadingScreen'
+import ErrorScreen from './ErrorScreen'
 import axios from 'axios'
 import styles from './Card.module.css'
 
