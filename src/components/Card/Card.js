@@ -8,11 +8,7 @@ import styles from './Card.module.css'
 
 
 export default function Card(props) {
-<<<<<<< HEAD:src/components/Card/Card.js
     const {winner=false,user,updateUser,removeCard} = props;
-=======
-    const {winner=false,user=null,idx,updateUser,removeCard} = props;
->>>>>>> master:src/components/Card.js
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
