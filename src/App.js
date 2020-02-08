@@ -1,5 +1,6 @@
 import React, {useState,useMemo} from 'react';
 import Card from './components/Card'
+import BlankCard from './components/BlankCard'
 import './App.css';
 
 
@@ -62,7 +63,7 @@ function App() {
                     updateUser={updateUser}/>
         })
       }
-      <button onClick={addCard}>Add Card</button>
+      <BlankCard onClick={addCard}/>
     </div>
   );
 }

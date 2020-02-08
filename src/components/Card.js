@@ -1,14 +1,12 @@
 import React, {useState,useRef,useEffect} from 'react'
-import UserStat from './UserStat'
-import CloseButton from './CloseButton'
+import {UserStat,CloseButton,LoadingScreen,ErrorScreen} from './Card/'
 import axios from 'axios'
 import styles from './Card.module.css'
-import {span} from './UserStat.module.css'
 
 
 export default function Card(props) {
     const {winner=false,user=null,idx,updateUser,removeCard} = props;
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [value, setValue] = useState("");
     const cancel = useRef(null);
@@ -45,7 +43,7 @@ export default function Card(props) {
 
     return (
         <div className={styles.card}>
-            <CloseButton style={{right:'20px'}} onClick={()=>{removeCard(idx)}}/>
+            <CloseButton style={{top:'12px',right:'24px'}} onClick={()=>removeCard(idx)}/>
             <form onSubmit={search} className={styles.form}>
                 <input 
                     type="text" 
@@ -53,8 +51,8 @@ export default function Card(props) {
                     value={value} 
                     onChange={changeValue} />
             </form>
-            {loading&&<span className={span}>Loading</span>}
-            {!loading&&error&&<span className={span}>Error</span>}
+            {loading&&<LoadingScreen/>}
+            {!loading&&error&&<ErrorScreen/>}
             {!loading&&user&&<UserStat user = {user} winner={winner}/>}
         </div>
     )
